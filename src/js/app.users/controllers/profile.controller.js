@@ -56,7 +56,7 @@ function ProfileController (GardenService, ProfileService, UserService, $state, 
       vm.user = res.data.user;
       vm.gardens = res.data.gardens;
       if(vm.gardens.length > 0){
-        vm.overviewTab = 1;
+        vm.gardenState = 1;
       }
       vm.gardens.forEach(function(garden, index){
         GardenService.getSpaces(garden.id).then(res => {
