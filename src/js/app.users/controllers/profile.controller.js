@@ -2,8 +2,8 @@ function ProfileController (GardenService, ProfileService, UserService, $state, 
 
   let vm = this;
 
-  
-  vm.gardenState = 0;
+
+  vm.gardenState = 1;
   vm.overviewTab = 0;
   // this toggles from 0 to >0 to show comments
   vm.gardenComments = 0;
@@ -12,7 +12,7 @@ function ProfileController (GardenService, ProfileService, UserService, $state, 
   vm.showEdit = false;
   vm.edit = edit;
   vm.submitEdit = submitEdit;
-  
+
   vm.editComment = false;
 
   // Create Gardens & Garden Listings
@@ -47,7 +47,7 @@ function ProfileController (GardenService, ProfileService, UserService, $state, 
       vm.plants = res.data;
       getPlants();
     });
-    
+
     $scope.$applyAsync();
   }
 
@@ -55,6 +55,9 @@ function ProfileController (GardenService, ProfileService, UserService, $state, 
     ProfileService.getProfile().then( res => {
       vm.user = res.data.user;
       vm.gardens = res.data.gardens;
+      if(vm.gardens.length < 1){
+        vm.gardenState = 0;
+      }
       vm.gardens.forEach(function(garden, index){
         GardenService.getSpaces(garden.id).then(res => {
           vm.gardens[index].plants = res.data;
